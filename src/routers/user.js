@@ -63,4 +63,16 @@ router.get('/users/me', auth, async (req, res) => {
  } )
 
 
+router.delete('/users/me', auth, async (req, res) => {
+    try {
+        await req.user.remove()
+        res.send(req.user)
+    }
+    catch(e)
+    {
+        res.status(500).send()
+    }
+})
+
+
 module.exports = router
