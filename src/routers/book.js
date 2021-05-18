@@ -17,15 +17,15 @@ router.post('/books', auth, async (req, res) => {
     }
 })
 
-router.get('/books', async (req, res) => {
+router.get('/booksforall',  async (req, res) => {
     try {
+
         const books = await Book.find({})
         res.send(books)
     } catch (e) {
         res.status(500).send()
     }
 })
-
 router.get('/books/:id', auth, async (req, res) => {
     const _id = req.params.id
 
