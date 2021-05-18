@@ -81,9 +81,9 @@ router.patch('/books/:id',auth, async (req, res) => {
     }
 })
 
-router.delete('/books/:id', async (req, res) => {
+router.delete('/books/:id', auth, async (req, res) => {
     try {
-        const book = await Book.findByIdAndDelete(req.params.id)
+        const book = await Book.findOneAndDelete({_id: req.params.id, owner:req.user._id})
 
         if (!book) {
             res.status(404).send()
