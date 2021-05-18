@@ -26,6 +26,19 @@ router.get('/booksforall',  async (req, res) => {
         res.status(500).send()
     }
 })
+
+
+router.get('/books', auth,  async (req, res) => {
+    try {
+        
+        await req.user.populate('books').execPopulate()
+        res.send(req.user.books)
+    } catch (e) {
+        res.status(500).send()
+    }
+})
+
+
 router.get('/books/:id', auth, async (req, res) => {
     const _id = req.params.id
 
