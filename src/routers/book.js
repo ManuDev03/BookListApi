@@ -26,11 +26,12 @@ router.get('/books', async (req, res) => {
     }
 })
 
-router.get('/books/:id', async (req, res) => {
+router.get('/books/:id', auth, async (req, res) => {
     const _id = req.params.id
 
     try {
-        const book = await Book.findById(_id)
+        
+        const book = await Book.findOne({_id, owner: req.user._id})
 
         if (!book) {
             return res.status(404).send()

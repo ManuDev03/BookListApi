@@ -22,13 +22,13 @@ app.listen(port, () => {
     console.log('Server is up on port ' + port)
 })
 
-const main = async () => {
+// const main = async () => {
 
-    const user = await
-    User.findById('60a262f33b9e9e3c9a17702f')
-    await user.populate('books').execPopulate()
-    console.log(user.books)
+//     const user = await
+//     User.findById('60a262f33b9e9e3c9a17702f')
+//     await user.populate('books').execPopulate()
+//     console.log(user.books)
 
-}
+// }
 
-main()
+// main()
