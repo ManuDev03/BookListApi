@@ -56,9 +56,9 @@ router.get('/books/:id', auth, async (req, res) => {
     }
 })
 
-router.patch('/books/:id', async (req, res) => {
+router.patch('/books/:id',auth, async (req, res) => {
     const updates = Object.keys(req.body)
-    const allowedUpdates = ['description', 'completed']
+    const allowedUpdates = ['name', 'author','price']
     const isValidOperation = updates.every((update) => allowedUpdates.includes(update))
 
     if (!isValidOperation) {
@@ -66,14 +66,14 @@ router.patch('/books/:id', async (req, res) => {
     }
 
     try {
-        const book = await Book.findById(req.params.id)
-
-        updates.forEach((update) => book[update] = req.body[update])
-        await book.save()
+        const book = await Book.findOne({ _id: req.params.id, owner: req.user._id})
 
         if (!book) {
             return res.status(404).send()
         }
+
+        updates.forEach((update) => book[update] = req.body[update])
+        await book.save()
 
         res.send(book)
     } catch (e) {
