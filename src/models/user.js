@@ -1,6 +1,7 @@
 const mongoose = require('mongoose')
 const bcrypt = require('bcryptjs')
 const jwt = require('jsonwebtoken')
+const Book = require('./book')
 
 
 
@@ -84,6 +85,16 @@ userSchema.pre('save', async function (next)  {
         user.password = await bcrypt.hash(user.password, 8)
     }
 
+    next()
+
+})
+
+// Delete user books when user is deleted
+userSchema.pre('remove', async function (next) {
+    const user = this
+    await Book.deleteMany({ owner: user._id})
+
+    next()
 })
 
 
